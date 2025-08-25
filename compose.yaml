@@ -1,0 +1,44 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: therapy_nest_database_configs
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "9000:5432"
+    networks:
+      - backend
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: therapy_nest_rabbitmq
+    ports:
+      - "5672:5672"     # RabbitMQ messaging
+      - "15672:15672"   # RabbitMQ UI
+    environment:
+      RABBITMQ_DEFAULT_USER: ${MQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${MQ_PASS}
+    networks:
+      - backend
+
+  springboot-app:
+    build: .
+    container_name: springboot-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - rabbitmq
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASS}
+      SPRING_RABBITMQ_HOST: rabbitmq
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
