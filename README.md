@@ -1,8 +1,8 @@
-# TherapyNest
+# TherapyJournal
 An AI-enhanced journal to track mental well-being, built with Java Spring Boot.
 
 
-# 🌱 TherapyNest: AI-Powered Mental Health Journal  
+# 🌱 TherapyJournal: AI-Powered Mental Health Journal  
 
 **A smart journaling companion that tracks your emotions, analyzes your thoughts, and suggests personalized mental health resources—powered by Java Spring Boot and AI.**  
 
